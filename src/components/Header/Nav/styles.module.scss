@@ -1,0 +1,41 @@
+.navContainer{
+    width: auto;
+    height: 5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    a {
+        display: inline-block;
+        position: relative;
+        padding: 0 0.5rem;
+        height: 5rem;
+        line-height: 5rem;
+        color: var(--gray-300);
+        transition: all 0.2s;
+
+        &+a {
+            margin-left: 2rem;
+        }
+
+        &.active {
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        &:hover {
+            color: var(--white);
+        }
+
+        &.active::after{
+            content: "";
+            height:3px;
+            width:100%;
+            border-radius: 3px 3px 0 0;
+            position: absolute;
+            bottom: 1px;
+            left: 0;
+            background-color: var(--yellow-500);
+        }
+    }   
+}

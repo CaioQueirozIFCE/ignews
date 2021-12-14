@@ -1,4 +1,5 @@
 import React from 'react';
+import { Nav } from './Nav';
 import { SignInButton } from './SignInButton';
 import styles from './styles.module.scss';
 
@@ -8,10 +9,7 @@ const Header: React.FC = () => {
         <header className={styles.headerContainer}>
             <div className={styles.headerContent}>
                 <img src="/images/logo.svg" alt="logo ignews"/>
-                <nav>
-                    <a className={styles.active} href="#">Home</a>
-                    <a href="#">Posts</a>
-                </nav>
+                <Nav/>
                 <SignInButton/>
             </div>
         </header>
