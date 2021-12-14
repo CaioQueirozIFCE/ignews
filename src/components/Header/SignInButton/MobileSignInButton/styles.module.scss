@@ -1,0 +1,32 @@
+.signInButton{
+    height: 3rem;
+    border-radius: 3rem;
+    background-color: var(--gray-850);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // color: var(--white);
+    // font-weight: bold;
+
+    &.borderButtonNotLogged {
+        border: 1px solid var(--yellow-500);
+    }
+    &.borderButtonLogged {
+        border: 1px solid var(--green-400);
+    }
+
+    svg{
+        width: 2.9rem;
+        height: 2.9rem;
+        border: 1px solid var(--gray-850);
+        border-radius:50%;
+    }
+
+    transition: all 0.2s;
+
+    &:hover{
+        filter: brightness(0.8);
+    }
+}

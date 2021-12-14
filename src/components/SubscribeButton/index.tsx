@@ -21,18 +21,15 @@ const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
             setDisabledButtonSubscribe(true);
             enabledComponentModalLoading();
             const response = await api.post('/subscribe', {priceId, session}); 
-            console.log('response =>', response)
             const { sessionId } = response.data;
             const stripe = await getStripeJS();
             await stripe.redirectToCheckout({sessionId}); 
         }catch(err){
             alert(err.message);
-            console.log('error => ', err);
         }finally{
             setDisabledButtonSubscribe(false);
             disabledComponentModalLoading();
         }
-
     }
     return(
         <button

@@ -1,27 +1,26 @@
-import React from 'react';
-import {FaGithub} from 'react-icons/fa';
-import {FiX} from 'react-icons/fi';
-import styles from './styles.module.scss';
-import { useSession, signIn, signOut } from 'next-auth/react';
-// import { signIn, useSession, signOut } from 'next-auth/react';
+import React, { useCallback } from "react";
+import { useWindowResize } from "../../../hooks/useWindowResize";
+import {DesktopSignInButton} from './DesktopSignInButton';
+import { MobileSignInButton } from "./MobileSignInButton";
 
-const SignInButton : React.FC = () => {
 
-    const {data:session} = useSession();
+const SignInButton: React.FC = () => {
+    const {width} = useWindowResize() || {width: 1000};
 
-    return session ? 
-        (
-            <button className={styles.signInButton} onClick={() => signOut()}>
-                <FaGithub color="#04d361"/>
-                {session.user.name}
-                <FiX color="#737380" className={styles.closeIcon}/>
-            </button>
-            ) : (
-            <button className={styles.signInButton} onClick={() => signIn('github')}>
-                <FaGithub color="#eba417"/>
-                Sign in with Github
-            </button>
-        )
+    const setSigInButtonSize = useCallback((width: number | undefined) => { 
+        const typeDevice = width > 700 ? 'desktop' : 'mobile';
+        const buttonSize = {
+            'desktop': <DesktopSignInButton/>,
+            'mobile': <MobileSignInButton/>
+        }
+        return buttonSize[typeDevice] ? buttonSize[typeDevice] : null;
+    }, []);
+
+    return(
+        <>
+            {setSigInButtonSize(width)}
+        </>
+    );
 }
 
-export {SignInButton};
+export { SignInButton }

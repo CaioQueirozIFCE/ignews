@@ -9,8 +9,8 @@ import { useWindowResize } from '../hooks/useWindowResize';
 
 function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
     const {width} = useWindowResize() || {width: 1000};
-    console.log('width: ' + width)
-  return(
+  
+    return(
     <SessionProvider session={session}>
       <ControllModalLoadingProvider>
         <Header/>
