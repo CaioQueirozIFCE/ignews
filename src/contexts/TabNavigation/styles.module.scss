@@ -1,0 +1,22 @@
+.modalTabNavigation {
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    inset: 0;
+    background: red;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    transition: all 0.2s;
+
+}

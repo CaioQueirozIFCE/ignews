@@ -3,10 +3,8 @@ import {FaGithub} from 'react-icons/fa';
 import {FiX} from 'react-icons/fi';
 import styles from './styles.module.scss';
 import { useSession, signIn, signOut } from 'next-auth/react';
-// import { signIn, useSession, signOut } from 'next-auth/react';
 
 const DesktopSignInButton : React.FC = () => {
-
     const {data:session} = useSession();
 
     return session ? 
