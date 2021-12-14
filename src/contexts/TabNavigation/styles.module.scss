@@ -1,8 +1,22 @@
+@keyframes slideTabNavigation {
+      from {
+        transform: translateX(100%);
+        opacity: 0.2;
+        visibility: visible;
+      }
+
+      to {
+        transform: translateX(0);
+        right: -1px;
+        opacity: 1;
+      }
+}
+
 .modalTabNavigation {
     width: 100vw;
     height: 100vh;
 
-    position: absolute;
+    position: fixed;
     inset: 0;
     z-index: 2;
 
@@ -11,8 +25,7 @@
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.18);
-
-    transition: all 0.2s;
+    transition: all 0.5s;
 
     .tabNavigation{
         width: 60%;
@@ -21,10 +34,12 @@
         padding: 1rem;
         position: absolute;
         right: -1px;
-        top: -1px;
+        bottom: -1px;
         z-index: 3;
         display: flex;
         flex-direction: column;
+        animation: slideTabNavigation 0.5s forwards ease;
+        transition: all 0.5s;
     }
 
     .menusTabBar{
