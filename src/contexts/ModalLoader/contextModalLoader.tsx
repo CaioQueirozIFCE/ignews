@@ -21,8 +21,8 @@ const ControllModalLoadingProvider: React.FC<IControllModalLoadingProps> = ({chi
 
     const openModalLoadingSubscribe = useCallback(() => setModalLoadingSubscribe(true), []);
     const enableLoadingSubscribe = useCallback(() => setLoadingSubscribe(true), []);
-    const closeModalLoadingSubscribe = useCallback(() => !modalLoadingSubscribe ??  setModalLoadingSubscribe(false), []);
-    const disableLoadingSubscribe = useCallback(() => !loadingSubscribe ??  setLoadingSubscribe(false), []);
+    const closeModalLoadingSubscribe = useCallback(() => !modalLoadingSubscribe ??  setModalLoadingSubscribe(false), [modalLoadingSubscribe]);
+    const disableLoadingSubscribe = useCallback(() => !loadingSubscribe ??  setLoadingSubscribe(false), [loadingSubscribe]);
     
     const enabledComponentModalLoading = useCallback(() => {
         openModalLoadingSubscribe()
