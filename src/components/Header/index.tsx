@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav } from './Nav';
+import { Nav } from '../Nav';
 import { SignInButton } from './SignInButton';
 import styles from './styles.module.scss';
 import {useWindowResize} from '../../hooks/useWindowResize';
