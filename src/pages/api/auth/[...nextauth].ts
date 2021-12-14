@@ -1,6 +1,5 @@
 import {query as q} from 'faunadb';
 import NextAuth from "next-auth"
-// import Providers from "next-auth/providers"
 import {fauna} from '../../../services/fauna';
 import GithubProvider from 'next-auth/providers/github';
 
@@ -40,7 +39,6 @@ export default NextAuth({
       },
       async session ({ session, token }) {
         session.user = token
-        console.log('session => ', session)
         return session
       }
     }

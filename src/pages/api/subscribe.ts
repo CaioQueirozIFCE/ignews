@@ -5,8 +5,7 @@ const controllerSubscrible =  async (request: Request, response: Response) =>  {
 
     if(request.method === 'POST'){
         try{
-            const {session:sessionRequest} = request.body;
-            const {user} = sessionRequest;
+            const {session:{user}} = request.body;
             const stripeCustommer = await stripe.customers.create({
                 email: user.email,
                 // metadata: 
