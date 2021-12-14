@@ -1,6 +1,9 @@
 import React, {useState, useCallback, createContext} from "react";
 import styles from './styles.module.scss';
-
+import {FiX} from 'react-icons/fi';
+import {useSession, signOut as logOut, signIn as logIn} from 'next-auth/react';
+import {FaGithub} from 'react-icons/fa';
+import { useWindowResize } from "../../hooks/useWindowResize";
 interface IControlModalTabNavigation{
     modalTabNavigation: boolean;
     enabledComponentModalTabNavigation: () => void,
@@ -14,10 +17,12 @@ interface IControlModalTabNavigationProps{
 const ControlModalTabNavigationContext = createContext<IControlModalTabNavigation>({} as IControlModalTabNavigation);
 
 const ControlModalTabNavigationProvider: React.FC<IControlModalTabNavigationProps> = ({children}) => {
+    const {data:session} = useSession();
+    const {width} = useWindowResize() || {width: 1000};
     const [modalTabNavigation, setModalTabNavigation] = useState<boolean>(false);
 
     const enableModalTabNavigation = useCallback(() => setModalTabNavigation(true), []);
-    const disableModalTabNavigation = useCallback(() => !modalTabNavigation ??  setModalTabNavigation(false), [modalTabNavigation]);
+    const disableModalTabNavigation = useCallback(() => modalTabNavigation ??  setModalTabNavigation(false), [modalTabNavigation]);
     
     const enabledComponentModalTabNavigation = useCallback(() => {
         enableModalTabNavigation()
@@ -27,6 +32,16 @@ const ControlModalTabNavigationProvider: React.FC<IControlModalTabNavigationProp
         disableModalTabNavigation()
     }, [disableModalTabNavigation]);
 
+    const signOut = useCallback(() => {
+        logOut();
+        disabledComponentModalTabNavigation();
+    }, [disabledComponentModalTabNavigation]);
+
+    const signIn = useCallback(() => {
+        logIn('github');
+        disabledComponentModalTabNavigation();
+    }, [disabledComponentModalTabNavigation]);
+
     return(
         <ControlModalTabNavigationContext.Provider value={{
             modalTabNavigation,
@@ -35,15 +50,47 @@ const ControlModalTabNavigationProvider: React.FC<IControlModalTabNavigationProp
         }}
         >
             <>
-                {modalTabNavigation && (
+                {(modalTabNavigation && width < 700) && (
                         <div className={styles.modalTabNavigation}>
-                            
+                            <div className={styles.tabNavigation}>
+                                <div className={styles.menusTabBar}>
+                                    <div className={styles.contentSimbolXAndIconIgnewsTabNavigation}>
+                                        <img src="/favicon.png" alt="logo ignews"/>
+                                        <button onClick={() => setModalTabNavigation(false)}>
+                                            <FiX color="#121212"/>
+                                        </button>
+                                    </div>
+                                    <nav className={styles.navContainerTabNavigation}>
+                                        <a className={`${styles.active} ${styles.linkTabNavigation}`} href="#">Home</a>
+                                        <a className={`${styles.active} ${styles.linkTabNavigation}`} href="#">Posts</a>
+                                    </nav>
+                                </div>
+                                <div className={styles.loginWithGithub}>
+                                    <div>
+                                        {session ? 
+                                            (
+                                                <div className={`${styles.contentImgGithubAndInformationIfIsLogged}`}>
+                                                    <FaGithub color="#04d361"/>
+                                                    <div className={styles.nameUserLogged}>{session.user.name}</div>
+                                                </div>
+                                            ) : (
+                                                <div className={`${styles.contentImgGithubAndInformationIfIsLogged}`}>
+                                                    <FaGithub color="#eba417"/>
+                                                    <button onClick={signIn}>Sign in with Github</button>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                                <div className={styles.signOn}>
+                                    <button onClick={signOut}>Sign Out</button>
+                                </div>
+                            </div>
                         </div>
                     )
                 }
                 {children}
             </>
-
         </ControlModalTabNavigationContext.Provider>
     );
 }
