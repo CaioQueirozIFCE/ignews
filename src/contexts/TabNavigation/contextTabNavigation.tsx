@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import {FiX} from 'react-icons/fi';
 import {useSession, signOut as logOut, signIn as logIn} from 'next-auth/react';
 import {FaGithub} from 'react-icons/fa';
-import { useWindowResize } from "../../hooks/useWindowResize";
+import {useWindowResize} from "../../hooks/useWindowResize";
 interface IControlModalTabNavigation{
     modalTabNavigation: boolean;
     enabledComponentModalTabNavigation: () => void,

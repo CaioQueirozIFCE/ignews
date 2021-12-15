@@ -6,10 +6,19 @@ import {ControlModalTabNavigationProvider} from '../contexts/TabNavigation/conte
 import '../styles/global.scss';
 import { Footer } from '../components/Footer';
 import { useWindowResize } from '../hooks/useWindowResize';
+import { useEffect } from 'react';
+import {monitorScreenHeight} from '../utils/monitorScreen';
 
 function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
     const {width} = useWindowResize() || {width: 1000};
-  
+
+    useEffect(() => {
+      monitorScreenHeight();
+      window.addEventListener('resize', monitorScreenHeight);
+
+      () => window.removeEventListener('resize', monitorScreenHeight);
+    }, []);
+
     return(
     <SessionProvider session={session}>
       <ControllModalLoadingProvider>

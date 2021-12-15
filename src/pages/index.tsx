@@ -1,8 +1,10 @@
 import { GetStaticProps } from "next";
 import Head from "next/head"
+import { useEffect } from "react";
 import { SubscribeButton } from "../components/SubscribeButton";
 import { stripe } from "../services/stripe";
 import styles from './home.module.scss';
+import {monitorScreenHeight} from '../utils/monitorScreen';
 
 type HomeProps = {
   priceId: string,
@@ -10,7 +12,12 @@ type HomeProps = {
   interval: string,
 }
 
-const Home = (products: HomeProps) => {
+const Home = (products: HomeProps) => {  
+  useEffect(() => {
+    monitorScreenHeight();
+    window.scrollTo({top: 0 - 40, behavior: 'smooth'});
+  }, []);
+
   return (
       <>
         <Head>

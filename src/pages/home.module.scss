@@ -2,7 +2,7 @@
     max-width: 1120px;
     margin: 0 auto;
     padding: 0 2rem;
-    height: calc(100vh - 5rem);
+    height: calc(100% - 5rem);
 
     display: flex;
     align-items: center;
@@ -53,16 +53,16 @@
     }
 }
 
-@media(max-width: 1360px){
-    .homeContainer{
-        transform: scale(0.8); 
+@media(max-width: 1439px) {
+        .homeContainer {
+            transform: scale(0.8);
+        }
     }
-}
 
 @media(max-width: 768px){
     .homeContainer{
         justify-content: center;
-        height: calc(100vh - 9rem);
+        height: calc(100% - 150px);
 
         > img{
             display: none;
@@ -70,8 +70,32 @@
     }
     .hero{
         text-align: center;
-        transform:scale(0.89);
+        max-height: 90%;
+         >span {
+             font-size: 1rem;
+             font-weight: bold;
+         }
 
+         h1 {
+             font-size: 3rem;
+             line-height: 3rem;
+             font-weight: 900;
+             margin-top: 2rem;
+
+             span {
+                 color: var(--cyan-500);
+             }
+         }
+
+         p {
+             font-size: 1rem;
+             line-height: 1.5rem;
+
+             >span {
+                 color: var(--cyan-500);
+                 font-weight: bold;
+             }
+         }
         button {
             margin: 2.5rem auto 0 auto;
         }
