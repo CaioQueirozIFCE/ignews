@@ -1,4 +1,4 @@
-import React, {useState, useCallback, createContext} from "react";
+import React, {useState, useCallback, createContext, useEffect} from "react";
 import styles from './styles.module.scss';
 import {FiX} from 'react-icons/fi';
 import {useSession, signOut as logOut, signIn as logIn} from 'next-auth/react';
@@ -42,6 +42,18 @@ const ControlModalTabNavigationProvider: React.FC<IControlModalTabNavigationProp
         disabledComponentModalTabNavigation();
     }, [disabledComponentModalTabNavigation]);
 
+    useEffect(() => {
+        function handleClickOutSideModalTabNavigation (event: PointerEvent) {
+            if (event.target === document.getElementById('modalTabNavigationCtx')) {
+                setModalTabNavigation(false);
+            }
+        }
+        if(modalTabNavigation && width < 700){
+            document.addEventListener('click', handleClickOutSideModalTabNavigation);
+        }
+        () => document.removeEventListener('click', handleClickOutSideModalTabNavigation);
+    }, [modalTabNavigation, width]);
+
     return(
         <ControlModalTabNavigationContext.Provider value={{
             modalTabNavigation,
@@ -51,7 +63,7 @@ const ControlModalTabNavigationProvider: React.FC<IControlModalTabNavigationProp
         >
             <>
                 {(modalTabNavigation && width < 700) && (
-                        <div className={styles.modalTabNavigation}>
+                        <div className={styles.modalTabNavigation} id="modalTabNavigationCtx">
                             <div className={styles.tabNavigation}>
                                 <div className={styles.menusTabBar}>
                                     <div className={styles.contentSimbolXAndIconIgnewsTabNavigation}>
