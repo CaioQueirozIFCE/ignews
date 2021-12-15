@@ -64,7 +64,15 @@ button {
     html{
         font-size: 87.5%;
     }
+}
+
+@media all and (orientation: landscape) and (max-height: 400px) {
     body{
-        height: calc((var(--vh, 1vh) * 100));
+        height: calc(var(--vh, 1vh) * 112);
+    }
+}
+@media all and (orientation: portrait) {
+    body{
+        height: calc(var(--vh, 1vh) * 100);
     }
 }
