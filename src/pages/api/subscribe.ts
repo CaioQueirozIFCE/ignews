@@ -1,17 +1,22 @@
 import {NextApiRequest as Request, NextApiResponse as Response} from 'next';
+import { CustomerRepository } from '../../api/repositories/customerRepository';
 import { stripe } from '../../services/stripe';
+import { CreateOrListCustomers } from '../../api/services/StripeServices/CreateOrListCustomers';
 
 const controllerSubscrible =  async (request: Request, response: Response) =>  {
 
     if(request.method === 'POST'){
         try{
             const {session:{user}} = request.body;
-            const stripeCustommer = await stripe.customers.create({
-                email: user.email,
-                // metadata: 
-            });
+            const customerRepository = new CustomerRepository();
+            const stripeCustomer = await new CreateOrListCustomers(
+                stripe,
+                user,
+                customerRepository
+            ).execute();
+
             const stripeCheckoutSession = await stripe.checkout.sessions.create({
-                customer: stripeCustommer.id,
+                customer: stripeCustomer.id,
                 payment_method_types: ['card'],
                 billing_address_collection: 'required',
                 line_items: [{
@@ -25,7 +30,7 @@ const controllerSubscrible =  async (request: Request, response: Response) =>  {
             });
             return response.status(200).json({sessionId: stripeCheckoutSession.id});
         }catch(error){
-            response.status(405).json({error:error.message});
+            response.status(405).json({error: error.message});
         }
     }else{
         response.setHeader('allow', 'POST');
