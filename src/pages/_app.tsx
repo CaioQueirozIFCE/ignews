@@ -8,7 +8,7 @@ import { Footer } from '../components/Footer';
 import { useWindowResize } from '../hooks/useWindowResize';
 import { useEffect } from 'react';
 import {monitorScreenHeight} from '../utils/monitorScreen';
-
+import { ToastContainer } from 'react-toastify';
 function MyApp({ Component, pageProps:{session, ...pageProps} }: AppProps) {
     const {width} = useWindowResize() || {width: 1000};
 

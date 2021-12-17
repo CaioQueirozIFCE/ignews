@@ -19,7 +19,7 @@ class CreateOrListCustomers{
 
     public async execute(): Promise<Stripe.Response<Stripe.Customer>>{
         const customer = await this.customerRepository.queryGetCustomer(this.user.email);
-        if(!customer){
+        if(customer){
             throw new AppError('Customer not found', 404);
         }
         if(!customer.data.stripe_customer_id){

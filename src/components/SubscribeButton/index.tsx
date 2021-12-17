@@ -4,13 +4,14 @@ import { useSession, signIn } from 'next-auth/react';
 import api from '../../services/api';
 import { getStripeJS } from '../../services/stripe-js';
 import { useModalLoader } from '../../hooks/useModalLoader';
+import {toastMessage} from '../Toast';
+
 interface ISUbscribeButton{
     priceId: string
 }
 
 const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
     const {data:session} = useSession();
-    console.log('session -> ', session)
     const [disabledButtonSubscribe, setDisabledButtonSubscribe] = useState<boolean>(false);
     const {disabledComponentModalLoading, enabledComponentModalLoading} = useModalLoader();
     const handleSubscribe = async () => {
@@ -26,7 +27,8 @@ const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
             const stripe = await getStripeJS();
             await stripe.redirectToCheckout({sessionId}); 
         }catch(err){
-            alert(err?.response?.data?.data);
+            toastMessage({typeError: 'error', message: err?.response?.data?.data});
+            console.log(err?.response?.data?.data)
         }finally{
             disabledComponentModalLoading();
             setDisabledButtonSubscribe(false);
