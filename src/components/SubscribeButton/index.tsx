@@ -10,6 +10,7 @@ interface ISUbscribeButton{
 
 const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
     const {data:session} = useSession();
+    console.log('session -> ', session)
     const [disabledButtonSubscribe, setDisabledButtonSubscribe] = useState<boolean>(false);
     const {disabledComponentModalLoading, enabledComponentModalLoading} = useModalLoader();
     const handleSubscribe = async () => {
@@ -25,10 +26,10 @@ const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
             const stripe = await getStripeJS();
             await stripe.redirectToCheckout({sessionId}); 
         }catch(err){
-            alert(err.message);
+            alert(err?.response?.data?.data);
         }finally{
-            setDisabledButtonSubscribe(false);
             disabledComponentModalLoading();
+            setDisabledButtonSubscribe(false);
         }
     }
     return(

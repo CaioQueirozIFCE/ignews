@@ -1,9 +1,10 @@
-import {NextApiRequest as Request, NextApiResponse as Response} from 'next';
+import {NextApiRequest , NextApiResponse} from 'next';
 import { CustomerRepository } from '../../api/repositories/customerRepository';
 import { stripe } from '../../services/stripe';
 import { CreateOrListCustomers } from '../../api/services/StripeServices/CreateOrListCustomers';
+import { handleErrors } from '../../api/errors/handleErrors';
 
-const controllerSubscrible =  async (request: Request, response: Response) =>  {
+const controllerSubscrible =  async (request: NextApiRequest, response: NextApiResponse) =>  {
 
     if(request.method === 'POST'){
         try{
@@ -14,7 +15,6 @@ const controllerSubscrible =  async (request: Request, response: Response) =>  {
                 user,
                 customerRepository
             ).execute();
-
             const stripeCheckoutSession = await stripe.checkout.sessions.create({
                 customer: stripeCustomer.id,
                 payment_method_types: ['card'],
@@ -30,7 +30,8 @@ const controllerSubscrible =  async (request: Request, response: Response) =>  {
             });
             return response.status(200).json({sessionId: stripeCheckoutSession.id});
         }catch(error){
-            response.status(405).json({error: error.message});
+            const err = handleErrors(error);
+            response.status(error.statusCode ?? 500).json({data: err.description ?? err.message});
         }
     }else{
         response.setHeader('allow', 'POST');
