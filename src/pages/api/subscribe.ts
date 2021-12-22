@@ -31,7 +31,7 @@ const controllerSubscrible =  async (request: NextApiRequest, response: NextApiR
             return response.status(200).json({sessionId: stripeCheckoutSession.id});
         }catch(error){
             const err = handleErrors(error);
-            response.status(error.statusCode ?? 500).json({data: err.description ?? err.message});
+            return response.status(error.statusCode ?? 500).json({data: err.description ?? err.message});
         }
     }else{
         response.setHeader('allow', 'POST');

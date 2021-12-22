@@ -28,7 +28,6 @@ const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
             await stripe.redirectToCheckout({sessionId}); 
         }catch(err){
             toastMessage({typeError: 'error', message: err?.response?.data?.data});
-            console.log(err?.response?.data?.data)
         }finally{
             disabledComponentModalLoading();
             setDisabledButtonSubscribe(false);

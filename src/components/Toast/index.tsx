@@ -11,6 +11,7 @@ interface ToastProps{
         theme?:'colored' | 'dark' | 'light',
     }
 }
+
 toast.configure({
     hideProgressBar:true,
     autoClose:2000,
@@ -19,7 +20,6 @@ toast.configure({
 });
 
 export const toastMessage = ({typeError, message, configToast}:ToastProps) => {
-    console.log('toast =>', typeError, message, configToast)
     switch (typeError) {
         case "success":
             toast.success(message, {...configToast});
