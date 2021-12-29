@@ -24,9 +24,9 @@ export default NextAuth({
                 )
               ),
               /* condition === true */
-              customerRepository.createCustomer(user.email),
+              customerRepository.queryCreateCustomer(user.email),
               /* else */
-              customerRepository.getCustomer(user.email)
+              customerRepository.queryGetCustomer(user.email)
             )
           );
           return true;

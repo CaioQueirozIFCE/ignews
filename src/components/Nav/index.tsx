@@ -9,14 +9,14 @@ const Nav: React.FC = () => {
     return(
         <nav className={styles.navContainer}>
             <Link  href="/" passHref>
-                <div className={pathname === '/' ? styles.active : ''}>
+                <a className={pathname === '/' ? styles.active : ''}>
                     Home
-                </div>
+                </a>
             </Link>
-            <Link href="/posts" passHref>
-                <div className={pathname === '/posts' ? styles.active : ''}>
+            <Link href="/posts" prefetch>
+                <a className={pathname === '/posts' ? styles.active : ''}>
                     Posts
-                </div>
+                </a>
             </Link>
         </nav>
     );

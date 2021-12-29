@@ -5,7 +5,7 @@
     justify-content: flex-start;
     align-items: center;
 
-    div {
+    a {
         display: inline-block;
         position: relative;
         padding: 0 0.5rem;
@@ -15,7 +15,7 @@
         transition: all 0.2s;
         cursor: pointer;
 
-        & + div {
+        & + a {
             margin-left: 2rem;
         }
 

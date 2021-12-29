@@ -28,11 +28,11 @@ const Posts = ({posts}) => {
                     {
                         posts.map((post: Post) => (
                             <Link key={post.slug} href="#" passHref>
-                                <div className={`${styles.contentPosts}`}>
+                                <a className={`${styles.contentPosts}`}>
                                     <time>{post.updated}</time>
                                     <strong>{post.title}</strong>
                                     <p>{post.excerpt}</p>
-                                </div>
+                                </a>
                             </Link>
                         ))
                     }
@@ -72,6 +72,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {
             posts
-        }
+        },
+        revalidate: 60 * 60 * 2 //2 horas
     }
 }

@@ -1,16 +1,17 @@
 .container{
     max-width: 1120px;
     margin: 0 auto;
-    padding: 0 2rem,
+    padding: 0 2rem;
+    height: auto;
 }
 
 .posts{
     max-width: 720px;
     margin: 5rem auto 0;
-    div.contentPosts {
+    a.contentPosts {
         display: block;
         cursor: pointer;
-        & + div.contentPosts {
+        & + a.contentPosts {
             margin-top: 2rem;
             padding-top: 2rem;
             border-top: 1px solid var(--gray-700);
@@ -44,4 +45,11 @@
         }
     }
     
+}
+
+@media(max-height: 568px) {
+    .container {
+         height: calc(100% + 3rem);
+         margin-top: -3rem;
+    }
 }
