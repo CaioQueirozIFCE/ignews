@@ -7,10 +7,10 @@
 .posts{
     max-width: 720px;
     margin: 5rem auto 0;
-    a{
+    div.contentPosts {
         display: block;
         cursor: pointer;
-        & + a {
+        & + div.contentPosts {
             margin-top: 2rem;
             padding-top: 2rem;
             border-top: 1px solid var(--gray-700);

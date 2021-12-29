@@ -4,6 +4,7 @@ import {GetStaticProps} from 'next';
 import { getPrismicClient } from '../../services/prismic';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
+import Link from 'next/link';
 
 type Post = {
     slug: string;
@@ -26,11 +27,13 @@ const Posts = ({posts}) => {
                 <div className={`${styles.posts}`}>
                     {
                         posts.map((post: Post) => (
-                            <a key={post.slug}>
-                                <time>{post.updated}</time>
-                                <strong>{post.title}</strong>
-                                <p>{post.excerpt}</p>
-                            </a>
+                            <Link key={post.slug} href="#" passHref>
+                                <div className={`${styles.contentPosts}`}>
+                                    <time>{post.updated}</time>
+                                    <strong>{post.title}</strong>
+                                    <p>{post.excerpt}</p>
+                                </div>
+                            </Link>
                         ))
                     }
                 </div>
