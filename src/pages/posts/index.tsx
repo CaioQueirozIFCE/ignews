@@ -39,7 +39,7 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
     
     useEffect(() => {
         if(loader){
-            setTimeout(disabledComponentModalLoading, 400)
+            setTimeout(disabledComponentModalLoading, 500)
             setLoader(loaderPost);
         }
     }, [loaderPost, disabledComponentModalLoading, loader]);
@@ -84,30 +84,30 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
                             </Link>
                         ))
                     }
-                </div>
                 <ul className={`${styles.paginatorContent}`}>
                     {
                         pageActived !== 1 && (<li className={`${styles.previous}`} onClick={previousPage}>
-                            <Link href={`/posts?page=${pageActived - 1}&size=${pageSize}`}>
+                            <Link href={`/posts?page=${pageActived - 1}&size=${3}`}>
                                 Previous
                             </Link>
                         </li>)
                     }
                         {totalPages?.map(page => (
                             <li key={page} className={definePageCurrent(page) ? styles.actived : ''} onClick={() => generalPage(page)}>
-                                <Link href={`/posts?page=${page}&size=${pageSize}`}>
+                                <Link href={`/posts?page=${page}&size=${3}`}>
                                     <a href="">{page}</a>
                                 </Link>
                             </li>
                         ))}
                     {
                         pageActived !== totalPages.length && (<li className={`${styles.next}`} onClick={nextPage}>
-                             <Link href={`/posts?page=${pageActived + 1}&size=${pageSize}`}>
+                             <Link href={`/posts?page=${pageActived + 1}&size=${3}`}>
                                 Next
                             </Link>
                         </li>)
                     }
                 </ul>
+                </div>
             </main>
         </>
     );
@@ -116,7 +116,7 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
 export default Posts;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const { page = '1', size = '1'} = query;
+    const { page = '1', size = '3'} = query;
     const pageCurrent = +page;
     const sizeCurrent = +size;
     const prismic = getPrismicClient();

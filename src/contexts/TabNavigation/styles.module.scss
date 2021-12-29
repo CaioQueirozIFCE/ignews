@@ -7,18 +7,18 @@
 
       to {
         transform: translateX(0);
-        right: -1px;
+        right: 0px;
         opacity: 1;
       }
 }
 
 .modalTabNavigation {
-    width: 100vw;
-    height: 100%;
+    width: 101vw;
+    height: 101vh;
 
     position: fixed;
     inset: 0;
-    z-index: 2;
+    z-index: 5;
 
     background: rgba(255, 255, 255, 0);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -28,14 +28,14 @@
     transition: all 0.5s;
 
     .tabNavigation{
-        width: 60%;
-        height:100%;
+        width: 65%;
+        height:102vh;
         background-color:var(--gray-50);
         padding: 1rem;
         position: absolute;
-        right: -1px;
-        bottom: -1px;
-        z-index: 3;
+        right: 0px;
+        bottom: -5px;
+        z-index: 5;
         display: flex;
         flex-direction: column;
         animation: slideTabNavigation 0.5s forwards ease;
