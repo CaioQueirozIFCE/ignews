@@ -48,7 +48,7 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
         return pageActived === totalPages[page - 1];
     }, [pageActived, totalPages]);
 
-    const generalPageFn = useCallback((page: number) => {
+    const generalPage = useCallback((page: number) => {
         setLoader(true);
         enabledComponentModalLoading();
         setPageActived(page);
@@ -87,21 +87,21 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
                 </div>
                 <ul className={`${styles.paginatorContent}`}>
                     {
-                        pageActived !== 1 && (<li className={`${styles.Previous}`} onClick={previousPage}>
+                        pageActived !== 1 && (<li className={`${styles.previous}`} onClick={previousPage}>
                             <Link href={`/posts?page=${pageActived - 1}&size=${pageSize}`}>
                                 Previous
                             </Link>
                         </li>)
                     }
                         {totalPages?.map(page => (
-                            <li key={page} className={definePageCurrent(page) ? styles.actived : ''} onClick={() => generalPageFn(page)}>
+                            <li key={page} className={definePageCurrent(page) ? styles.actived : ''} onClick={() => generalPage(page)}>
                                 <Link href={`/posts?page=${page}&size=${pageSize}`}>
                                     <a href="">{page}</a>
                                 </Link>
                             </li>
                         ))}
                     {
-                        pageActived !== totalPages.length && (<li className={`${styles.Previous}`} onClick={nextPage}>
+                        pageActived !== totalPages.length && (<li className={`${styles.next}`} onClick={nextPage}>
                              <Link href={`/posts?page=${pageActived + 1}&size=${pageSize}`}>
                                 Next
                             </Link>
