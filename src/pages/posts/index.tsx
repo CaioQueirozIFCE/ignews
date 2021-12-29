@@ -10,14 +10,10 @@ type Post = {
     slug: string;
     title: string;
     excerpt: string;
-    updated: string;
-}
-interface PostsProps{
-    posts: Array<Post>
+    updatedAt: string;
 }
 
 const Posts = ({posts}) => {
-
     return(
         <>
             <Head>
@@ -29,7 +25,7 @@ const Posts = ({posts}) => {
                         posts.map((post: Post) => (
                             <Link key={post.slug} href="#" passHref>
                                 <a className={`${styles.contentPosts}`}>
-                                    <time>{post.updated}</time>
+                                    <time>{post.updatedAt}</time>
                                     <strong>{post.title}</strong>
                                     <p>{post.excerpt}</p>
                                 </a>
@@ -59,10 +55,10 @@ export const getStaticProps: GetStaticProps = async () => {
     
     const posts = response.results?.map(post => {
         return {
-            slug: post.uid,
+            slug: post?.uid,
             title: RichText.asText(post.data.title),
-            excerpt: post.data.content.find(content => content.type === 'paragraph')?.text ?? '',
-            updatedAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
+            excerpt: post?.data?.content?.find(content => content.type === 'paragraph')?.text ?? '',
+            updatedAt: new Date(post?.last_publication_date).toLocaleDateString('pt-BR', {
                 day: '2-digit',
                 month: 'long',
                 year: 'numeric'
@@ -71,7 +67,7 @@ export const getStaticProps: GetStaticProps = async () => {
     });
     return {
         props: {
-            posts
+            posts 
         },
         revalidate: 60 * 60 * 2 //2 horas
     }

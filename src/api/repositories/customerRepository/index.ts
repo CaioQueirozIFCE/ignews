@@ -17,7 +17,7 @@ class CustomerRepository{
     }
 
     public async queryGetCustomer(email:string): Promise<CustomersFaunaDB> {
-        const customer = await fauna.query<CustomersFaunaDB>(q.Get(q.Match('user_by_email'), email)).then(res => res).catch(err => err);
+        const customer = await fauna.query<CustomersFaunaDB>(q.Get(q.Match(q.Index('user_by_email'), email))).then(res => res).catch(err => err);
         return customer;
     }
 

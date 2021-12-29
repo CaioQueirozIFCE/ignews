@@ -26,8 +26,6 @@ const manageSubscription = async (
         price_id: subscription.items.data[0].price.id
     } as ISubscription;
     
-    const x = await subscriptionRepository.queryGetRefSubscritonById(subscription.id)
-    console.log('x', x, typeof x)
     if(createAction){
         const createSubscription = await subscriptionRepository.queryCreateSubscription(subscriptionData);
         return createSubscription;
