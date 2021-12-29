@@ -16,42 +16,25 @@ class CustomerRepository{
         return customer;
     }
 
-    public createCustomer(email: string): Expr{
-        const customer = q.Create(
-            q.Collection(this.coletions), {data: {email: email}}
-        );
-        return customer;
-    }
-
-    public getCustomer(email: string): Expr {
-        const customer = q.Get(this.matchByEmail(email));
-        return customer;
-    }
-
-    public getStripeCustomerById(stripe_customer_id: string): Expr {
-        const customer = q.Get(this.macthByStripeCustomerId(stripe_customer_id));
-        return customer;
-    }
-
     public async queryGetCustomer(email:string): Promise<CustomersFaunaDB> {
-        const customer = await fauna.query<CustomersFaunaDB>(this.getCustomer(email)).then((ret) => ret).catch((err) => err);
+        const customer = await fauna.query<CustomersFaunaDB>(q.Get(q.Match('user_by_email'), email)).then(res => res).catch(err => err);
         return customer;
     }
 
-    public async queryGetStripeCustomer(stripe_customer_id: string): Promise<CustomersFaunaDB> {
-        const customer = await fauna.query<CustomersFaunaDB>(this.getStripeCustomerById(stripe_customer_id)).then((ret) => ret).catch((err) => err);
+    public async queryRefStripeCustomer(stripe_customer_id: string): Promise<CustomersFaunaDB> {
+        const customer = await fauna.query<CustomersFaunaDB>(q.Select("ref", q.Get(q.Match('subscription_by_id'), stripe_customer_id))).then(res => res).catch(err => err);
         return customer;
     }   
 
-    public async queryCreateCustomer(email: string): Promise<object>{
-        const customer = await fauna.query(
-            this.createCustomer(email)
-        );
+    public async queryCreateCustomer(email: string): Promise<CustomersFaunaDB>{
+        const customer = await fauna.query<CustomersFaunaDB>(
+           q.Create(q.Collection(this.coletions), {data: {email: email}})
+        ).then(res => res).catch(err => err);
         return customer;
     }
 
-    public async queryUpdateCustomer(customer_ref_id:string, stripe_customer_id: string): Promise<object> {        
-        const updateCustomer = await fauna.query(
+    public async queryUpdateCustomer(customer_ref_id:string, stripe_customer_id: string): Promise<CustomersFaunaDB> {        
+        const updateCustomer = await fauna.query<CustomersFaunaDB>(
             q.Update(
                 q.Ref(q.Collection(this.coletions), customer_ref_id),
                 {
@@ -60,7 +43,7 @@ class CustomerRepository{
                     }
                 }
             )
-        );
+        ).then(res => res).catch(err => err);
 
         return updateCustomer;
     }

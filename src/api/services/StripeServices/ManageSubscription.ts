@@ -6,13 +6,12 @@ import { SubscriptionsRespository } from '../../repositories/subscriptionsReposi
 const manageSubscription = async (
     subscriptionId: string,
     customerId:string,
-    createAction: boolean
+    createAction: boolean = false
 ) => {
-    console.log('entrou manage')
     const customerRepository = new CustomerRepository();
     const subscriptionRepository = new SubscriptionsRespository();
 
-    const customer = await customerRepository.queryGetStripeCustomer(customerId);
+    const customer = await customerRepository.queryRefStripeCustomer(customerId);
     
     if(!customer){
         throw new Error('Stripe customer not found');
@@ -21,20 +20,21 @@ const manageSubscription = async (
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
     const subscriptionData =  {
-        customer_ref: customer.ref,
+        customer_ref: customer,
         subscriptionId: subscription.id,
         status: subscription.status,
         price_id: subscription.items.data[0].price.id
     } as ISubscription;
-
+    
+    const x = await subscriptionRepository.queryGetRefSubscritonById(subscription.id)
+    console.log('x', x, typeof x)
     if(createAction){
-        //cria a subscription
         const createSubscription = await subscriptionRepository.queryCreateSubscription(subscriptionData);
         return createSubscription;
+    }else{
+        const updateSubscription = await subscriptionRepository.queryReplaceSubscription(subscription.id, subscriptionData);
+        return updateSubscription;
     }
-
-    const updateSubscription = await subscriptionRepository.queryUpdateSubscription(subscription.id, subscriptionData);
-    return updateSubscription;
 }
 
 export { manageSubscription }

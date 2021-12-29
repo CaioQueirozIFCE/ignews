@@ -23,7 +23,8 @@ export const config = {
 
 const relevantsEvent = new Set([
     'checkout.session.completed',
-    'customer.subscription.updated'
+    'customer.subscription.updated',
+    'customer.subscription.deleted',
 ]);
 
 const webHooks = async (request: NextApiRequest, response: NextApiResponse) => {
@@ -45,6 +46,7 @@ const webHooks = async (request: NextApiRequest, response: NextApiResponse) => {
             try{
                 switch(type){
                     case 'customer.subscription.updated':
+                    case 'customer.subscription.deleted':
                         const subscription = event.data.object as Stripe.Subscription;
                         await manageSubscription(
                             subscription.id,
@@ -66,9 +68,8 @@ const webHooks = async (request: NextApiRequest, response: NextApiResponse) => {
                 }      
             }catch(error){
                 const err = handleErrors(error);
-                return response.status(error.statusCode ?? 500).json({data: err.description ?? err.message});
+                return response.json({ error: err.description ?? err.message });
             }
-
         }
         response.json({ received: true });
     }else{

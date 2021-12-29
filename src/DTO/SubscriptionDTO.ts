@@ -4,7 +4,7 @@ const customerRef = {} as CustomersFaunaDB;
 
 export interface ISubscription{
     subscriptionId: string,
-    customer_ref: typeof customerRef.ref,
+    customer_ref: typeof customerRef,
     stripeCustomerId: string,
     status: string,
     price_id: string | number,
