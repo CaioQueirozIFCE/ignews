@@ -24,7 +24,6 @@ type contentPrismic = {
         type: string
     }>
 }
-
 interface IPostProps {
     posts: Array<Post>,
     totalPages: [],
@@ -36,7 +35,7 @@ type LimitsPaging = {
     maxRight: number,
 }
 
-const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
+const Posts = ({ posts, totalPages }: IPostProps) => {
     const {enabledComponentModalLoading, disabledComponentModalLoading, loadingSubscribe} = useModalLoader();
     const [pageActived, setPageActived] = useState<number>(1);
     const [limitsPagining, setLimitsPaginig] = useState<LimitsPaging>({
@@ -176,6 +175,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         }
     }
 }
+
+//verificar se carrega uma lista grande e para a paginação ser feita apenas no front, assim poder trocar serverPropos por StaticProps
 
 // export const getStaticProps: GetStaticProps = async () => {
 //     const prismic = getPrismicClient();

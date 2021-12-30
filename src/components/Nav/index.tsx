@@ -1,23 +1,20 @@
 import React from "react";
 import styles from './styles.module.scss';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { ActivedLink } from '../ActivedLink';
 
 const Nav: React.FC = () => {
-    const {pathname} = useRouter();
-
     return(
         <nav className={styles.navContainer}>
-            <Link  href="/" passHref >
-                <a className={pathname === '/' ? styles.active : ''}>
+            <ActivedLink  href="/" passHref activedClassName={styles.active} >
+                <a>
                     Home
                 </a>
-            </Link>
-            <Link href="/posts" passHref>
-                <a className={pathname === '/posts' ? styles.active : ''}>
+            </ActivedLink>
+            <ActivedLink href="/posts" prefetch activedClassName={styles.active}>
+                <a>
                     Posts
                 </a>
-            </Link>
+            </ActivedLink>
         </nav>
     );
 }
