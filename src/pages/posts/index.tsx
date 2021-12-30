@@ -60,7 +60,7 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
             maxRight = 5;
         }
         if(maxRight > totalPages.length){
-            maxLeft = totalPages.length - (maxButtons - 1);
+            maxLeft = totalPages.length - (maxButtons - 1) < 0 ? 1 : totalPages.length - (maxButtons - 1);
             maxRight = totalPages.length;
         }
         setLimitsPaginig({maxLeft, maxRight});
@@ -88,6 +88,7 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
         calculateMaxVisibleButtons(pageActived + 1, totalPages);
     }, [pageActived, enabledComponentModalLoading, calculateMaxVisibleButtons, totalPages]);
 
+    console.log(totalPages.slice(limitsPagining.maxLeft - 1, limitsPagining.maxRight))
     return(
         <>
             <Head>
@@ -138,7 +139,7 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
 export default Posts;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const _size = 1;
+    const _size = 3;
     const { page = '1'} = query;
     const pageCurrent = +page;
     const sizeCurrent = +_size;
