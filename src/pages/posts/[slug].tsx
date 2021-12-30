@@ -9,6 +9,7 @@ type PostProps = {
     title: string;
     content: string;
     updatedAt: string;
+    firstChildIsParagraph: boolean
 }
 
 type Props = {
@@ -25,7 +26,7 @@ const Post = ({ post }: Props) => {
             <main className={`${styles.contentMain}`}>
                 <article className={`${styles.postArticle}`}>
                     <h1>{post.title}</h1>
-                    <time>{post.updatedAt}</time>
+                    <time className={post.firstChildIsParagraph ? styles.firstChildContentIsParagraph : ''}>{post.updatedAt}</time>
                     <div className={styles.post} dangerouslySetInnerHTML={{__html: post.content}}/>
                 </article>
             </main>
@@ -42,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({req: request, para
 
     const prismic = getPrismicClient();
     const response = await prismic.getByUID('publication', String(slug), {});
+    console.log(response.data.content[0].type)
     const post = {
         slug: response.uid,
         title: RichText.asText(response.data.title),
@@ -50,7 +52,8 @@ export const getServerSideProps: GetServerSideProps = async ({req: request, para
             day: '2-digit',
             month: 'long',
             year: 'numeric'
-        })
+        }),
+        firstChildIsParagraph: response.data.content[0].type === "paragraph"
     };
 
     return {

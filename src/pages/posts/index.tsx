@@ -38,7 +38,7 @@ type LimitsPaging = {
 
 const Posts = ({ posts, totalPages, pageCurrent }: IPostProps) => {
     const {enabledComponentModalLoading, disabledComponentModalLoading, loadingSubscribe} = useModalLoader();
-    const [pageActived, setPageActived] = useState<number>(+pageCurrent);
+    const [pageActived, setPageActived] = useState<number>(+pageCurrent || 1);
     const [limitsPagining, setLimitsPaginig] = useState<LimitsPaging>({
         maxLeft: 1,
         maxRight: 5
