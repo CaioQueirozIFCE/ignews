@@ -29,39 +29,33 @@ interface IPostProps {
     posts: Array<Post>,
     totalPages: [],
     pageSize: number | string,
-    loaderPost: boolean
 }
 
-const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
-    const {enabledComponentModalLoading, disabledComponentModalLoading} = useModalLoader();
+const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
+    const {enabledComponentModalLoading, disabledComponentModalLoading, loadingSubscribe} = useModalLoader();
     const [pageActived, setPageActived] = useState<number>(1);
-    const [loader, setLoader] = useState(loaderPost);
     
     useEffect(() => {
-        if(loader){
-            setTimeout(disabledComponentModalLoading, 500)
-            setLoader(loaderPost);
+        if(loadingSubscribe){
+            setTimeout(disabledComponentModalLoading, 500);
         }
-    }, [loaderPost, disabledComponentModalLoading, loader]);
+    }, [loadingSubscribe, disabledComponentModalLoading]);
 
     const definePageCurrent = useCallback((page: number): boolean => {
         return pageActived === totalPages[page - 1];
     }, [pageActived, totalPages]);
 
     const generalPage = useCallback((page: number) => {
-        setLoader(true);
         enabledComponentModalLoading();
         setPageActived(page);
     }, [enabledComponentModalLoading]);
 
     const previousPage = useCallback(() => {
-        setLoader(true);
         enabledComponentModalLoading();
         setPageActived(pageActived - 1)
     }, [pageActived, enabledComponentModalLoading]);
 
     const nextPage = useCallback(() => {
-        setLoader(true);
         enabledComponentModalLoading();
         setPageActived(pageActived + 1)
     }, [pageActived, enabledComponentModalLoading]);
@@ -87,21 +81,21 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
                 <ul className={`${styles.paginatorContent}`}>
                     {
                         pageActived !== 1 && (<li className={`${styles.previous}`} onClick={previousPage}>
-                            <Link href={`/posts?page=${pageActived - 1}&size=${3}`}>
+                            <Link href={`/posts?page=${pageActived - 1}`}>
                                 Previous
                             </Link>
                         </li>)
                     }
                         {totalPages?.map(page => (
                             <li key={page} className={definePageCurrent(page) ? styles.actived : ''} onClick={() => generalPage(page)}>
-                                <Link href={`/posts?page=${page}&size=${3}`}>
+                                <Link href={`/posts?page=${page}`}>
                                     <a href="">{page}</a>
                                 </Link>
                             </li>
                         ))}
                     {
                         pageActived !== totalPages.length && (<li className={`${styles.next}`} onClick={nextPage}>
-                             <Link href={`/posts?page=${pageActived + 1}&size=${3}`}>
+                             <Link href={`/posts?page=${pageActived + 1}`}>
                                 Next
                             </Link>
                         </li>)
@@ -116,9 +110,10 @@ const Posts = ({ posts, totalPages, pageSize, loaderPost}: IPostProps) => {
 export default Posts;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const { page = '1', size = '3'} = query;
+    const _size = 3;
+    const { page = '1'} = query;
     const pageCurrent = +page;
-    const sizeCurrent = +size;
+    const sizeCurrent = +_size;
     const prismic = getPrismicClient();
     const response = await prismic.query(
         [
@@ -149,8 +144,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         props:{
             posts,
             totalPages,
-            pageSize: size,
-            loaderPost: false
+            pageSize: _size,
         }
     }
 }
