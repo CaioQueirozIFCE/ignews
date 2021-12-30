@@ -31,9 +31,18 @@ interface IPostProps {
     pageSize: number | string,
 }
 
+type LimitsPaging = {
+    maxLeft: number,
+    maxRight: number,
+}
+
 const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
     const {enabledComponentModalLoading, disabledComponentModalLoading, loadingSubscribe} = useModalLoader();
     const [pageActived, setPageActived] = useState<number>(1);
+    const [limitsPagining, setLimitsPaginig] = useState<LimitsPaging>({
+        maxLeft: 1,
+        maxRight: 5
+    });
     
     useEffect(() => {
         if(loadingSubscribe){
@@ -41,24 +50,43 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
         }
     }, [loadingSubscribe, disabledComponentModalLoading]);
 
+    const calculateMaxVisibleButtons = useCallback((page = 1, totalPages): void => {
+        const maxButtons = 5;
+        let maxLeft = (page - Math.floor(maxButtons / 2));
+        let maxRight = (page + Math.floor(maxButtons / 2));
+
+        if(maxLeft < 1){
+            maxLeft = 1;
+            maxRight = 5;
+        }
+        if(maxRight > totalPages.length){
+            maxLeft = totalPages.length - (maxButtons - 1);
+            maxRight = totalPages.length;
+        }
+        setLimitsPaginig({maxLeft, maxRight});
+    }, []);
+
     const definePageCurrent = useCallback((page: number): boolean => {
         return pageActived === totalPages[page - 1];
     }, [pageActived, totalPages]);
 
-    const generalPage = useCallback((page: number) => {
+    const generalPage = useCallback((page: number): void => {
+        calculateMaxVisibleButtons(page, totalPages);
         enabledComponentModalLoading();
         setPageActived(page);
-    }, [enabledComponentModalLoading]);
+    }, [enabledComponentModalLoading, calculateMaxVisibleButtons, totalPages]);
 
-    const previousPage = useCallback(() => {
+    const previousPage = useCallback((): void => {
         enabledComponentModalLoading();
-        setPageActived(pageActived - 1)
-    }, [pageActived, enabledComponentModalLoading]);
+        setPageActived(pageActived - 1);
+        calculateMaxVisibleButtons(pageActived - 1, totalPages);
+    }, [pageActived, enabledComponentModalLoading, calculateMaxVisibleButtons, totalPages]);
 
-    const nextPage = useCallback(() => {
+    const nextPage = useCallback((): void => {
         enabledComponentModalLoading();
         setPageActived(pageActived + 1)
-    }, [pageActived, enabledComponentModalLoading]);
+        calculateMaxVisibleButtons(pageActived + 1, totalPages);
+    }, [pageActived, enabledComponentModalLoading, calculateMaxVisibleButtons, totalPages]);
 
     return(
         <>
@@ -86,7 +114,7 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
                             </Link>
                         </li>)
                     }
-                        {totalPages?.map(page => (
+                        {totalPages.slice(limitsPagining.maxLeft - 1, limitsPagining.maxRight)?.map(page => (
                             <li key={page} className={definePageCurrent(page) ? styles.actived : ''} onClick={() => generalPage(page)}>
                                 <Link href={`/posts?page=${page}`}>
                                     <a href="">{page}</a>
@@ -110,7 +138,7 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
 export default Posts;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-    const _size = 3;
+    const _size = 1;
     const { page = '1'} = query;
     const pageCurrent = +page;
     const sizeCurrent = +_size;
