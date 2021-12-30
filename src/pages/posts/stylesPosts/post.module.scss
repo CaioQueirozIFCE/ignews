@@ -85,6 +85,10 @@
         }
         a{
             color: var(--yellow-500);
+            transition: all 0.2s;
+            &:hover{
+                filter: brightness(0.8);
+            }
         }
     }
 

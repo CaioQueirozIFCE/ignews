@@ -28,6 +28,7 @@ interface IPostProps {
     posts: Array<Post>,
     totalPages: [],
     pageSize: number | string,
+    pageCurrent: number | string
 }
 
 type LimitsPaging = {
@@ -35,9 +36,9 @@ type LimitsPaging = {
     maxRight: number,
 }
 
-const Posts = ({ posts, totalPages }: IPostProps) => {
+const Posts = ({ posts, totalPages, pageCurrent }: IPostProps) => {
     const {enabledComponentModalLoading, disabledComponentModalLoading, loadingSubscribe} = useModalLoader();
-    const [pageActived, setPageActived] = useState<number>(1);
+    const [pageActived, setPageActived] = useState<number>(+pageCurrent);
     const [limitsPagining, setLimitsPaginig] = useState<LimitsPaging>({
         maxLeft: 1,
         maxRight: 5
@@ -172,6 +173,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
             posts,
             totalPages,
             pageSize: _size,
+            pageCurrent: page
         }
     }
 }
