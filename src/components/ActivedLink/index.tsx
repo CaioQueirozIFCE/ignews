@@ -4,15 +4,20 @@ import React, { useMemo, ReactElement } from 'react';
 
 interface ActivedLinkProps extends LinkProps{
     activedClassName: string;
-    children: ReactElement
+    children: ReactElement;
+    subPages: boolean;
 }
 
-const ActivedLink = ({activedClassName, children, ...rest}: ActivedLinkProps) => {
+const ActivedLink = ({activedClassName, children, subPages, ...rest}: ActivedLinkProps) => {
     const {asPath} = useRouter();
-
+    
     const className = useMemo(() => {
+        if(subPages){
+            return asPath.match("" + rest.href.toString() + "(\/(.){0,})?") !== null ? activedClassName : '';
+        }
+
         return asPath === rest.href ? activedClassName : '';
-    }, [asPath, activedClassName, rest.href]);
+    }, [asPath, activedClassName, rest.href, subPages]);
 
     return(
         <Link {...rest}>    
