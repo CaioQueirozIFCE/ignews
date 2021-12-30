@@ -11,8 +11,7 @@ const ActivedLink = ({activedClassName, children, ...rest}: ActivedLinkProps) =>
     const {asPath} = useRouter();
 
     const className = useMemo(() => {
-        const verifyActivedLink = asPath === rest.href ? activedClassName : '';
-        return verifyActivedLink;
+        return asPath === rest.href ? activedClassName : '';
     }, [asPath, activedClassName, rest.href]);
 
     return(

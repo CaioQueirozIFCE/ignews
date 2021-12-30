@@ -90,13 +90,13 @@ const Posts = ({ posts, totalPages }: IPostProps) => {
     return(
         <>
             <Head>
-                <title>Posts | Ignews</title>
+                <title>Posts | ig.news</title>
             </Head>
             <main className={`${styles.container}`}>
                 <div className={`${styles.posts}`}>
                     {
                         posts?.map((post: Post) => (
-                            <Link key={post.slug} href="#" passHref>
+                            <Link key={post.slug} href={`/posts/${post.slug}`} prefetch>
                                 <a className={`${styles.contentPosts}`}>
                                     <time>{post.updatedAt}</time>
                                     <strong>{post.title}</strong>

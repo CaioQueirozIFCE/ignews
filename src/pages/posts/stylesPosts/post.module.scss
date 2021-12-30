@@ -1,0 +1,99 @@
+.contentMain{
+    max-width: 70rem;
+    width: 90%;
+    margin: 1rem auto 2rem auto;
+    padding: 0 2rem;
+    height: auto;
+
+}
+
+.postArticle{
+    max-width:57.5rem;
+    margin: 3rem auto 0;
+    
+    h1{
+        text-align: center;
+        margin: 1rem auto;
+        font-size: 3.5rem;
+        font-weight: 900;
+    }
+    time{
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        color: var(--gray-300);
+        margin: 0.5rem 0;
+    }
+
+    div.post{
+
+        h2:first-child{//subtitulo
+            font-size: 2rem;
+            text-align: justify;
+            line-height: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        h2{//considerar como h3
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 500;
+
+        }
+        pre{//código
+            display: block;
+            padding: 1rem;
+            background-color: var(--gray-pre);
+            overflow: auto;
+            color: var(--white);
+
+            padding: 1rem;
+            margin: 1rem auto;
+
+            &::-webkit-scrollbar{
+                width: 6px;
+                height: 6px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: var(--yellow-500);
+                border-radius: 35px;
+            }
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+            &::-webkit-scrollbar-track-piece {
+                background-color: var(--gray-100);
+            }
+        }
+        p, ul, ol{
+            margin: 1.5rem;
+        }
+        p{
+            font-size: 1rem;
+            font-weight: 200;
+            text-align: justify;
+        }
+        ul, ol{
+            display: block;
+            padding-left: 1.5rem;
+
+            li{
+                list-style: circle;
+                margin: 0.5rem 0;
+
+            }
+        }
+        a{
+            color: var(--yellow-500);
+        }
+    }
+
+}
+
+
+@media(max-width: 1400px) {
+    .postArticle {
+        height: 100%;
+        max-width: 720px;
+    }
+}
