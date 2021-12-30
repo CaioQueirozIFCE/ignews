@@ -1,11 +1,11 @@
-import Head from 'next/head';
+import { useCallback, useEffect, useState } from 'react';
 import styles from './style.module.scss';
-import {GetServerSideProps, GetStaticProps} from 'next';
+import {GetServerSideProps} from 'next';
+import Head from 'next/head';
 import { getPrismicClient } from '../../services/prismic';
+import Link from 'next/link';
 import Prismic from '@prismicio/client';
 import { RichText } from 'prismic-dom';
-import Link from 'next/link';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useModalLoader } from '../../hooks/useModalLoader';
 
 type Post = {
@@ -88,7 +88,6 @@ const Posts = ({ posts, totalPages, pageSize}: IPostProps) => {
         calculateMaxVisibleButtons(pageActived + 1, totalPages);
     }, [pageActived, enabledComponentModalLoading, calculateMaxVisibleButtons, totalPages]);
 
-    console.log(totalPages.slice(limitsPagining.maxLeft - 1, limitsPagining.maxRight))
     return(
         <>
             <Head>
