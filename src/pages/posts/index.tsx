@@ -96,7 +96,7 @@ const Posts = ({ posts, totalPages }: IPostProps) => {
                 <div className={`${styles.posts}`}>
                     {
                         posts?.map((post: Post) => (
-                            <Link key={post.slug} href={`/posts/${post.slug}`} prefetch>
+                            <Link key={post.slug} href={`/posts/${post.slug}`} passHref>
                                 <a className={`${styles.contentPosts}`}>
                                     <time>{post.updatedAt}</time>
                                     <strong>{post.title}</strong>
