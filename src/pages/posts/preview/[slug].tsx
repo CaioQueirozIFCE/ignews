@@ -1,8 +1,10 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { getSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { RichText } from 'prismic-dom';
+import { useEffect } from 'react';
 import { getPrismicClient } from '../../../services/prismic';
 import styles from '../stylesPosts/post.module.scss';
 
@@ -19,6 +21,14 @@ type Props = {
 }
 
 const PostPeview = ({ post }: Props) => {
+    const session = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+        if(session?.data?.activeSubscription){
+            router.push(`/posts/${post.slug}`);
+        }
+    }, [session]);
 
     return(
         <>
@@ -54,7 +64,7 @@ export const getStaticPaths : GetStaticPaths = () => {
     }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const {slug} = params;
 
