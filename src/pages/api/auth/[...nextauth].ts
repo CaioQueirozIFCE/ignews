@@ -39,9 +39,17 @@ export default NextAuth({
       async session ({ session, token }) {
         const subscriptionRepository = new SubscriptionsRespository();
         const customerRef = await subscriptionRepository.getUserActiveSubscription(session.user.email, 'user_by_email');
-        session.statusSubscription = customerRef?.data?.status;
+        const error = +customerRef?.requestResult?.statusCode === 404 ? 
+          {
+            error: customerRef?.description,
+            statusCode: +customerRef?.requestResult?.statusCode
+          } : undefined;
+        session.activeSubscription = error?.statusCode === 404 ? null : customerRef?.data;
         session.user = token;
-        return session;
+        return {
+          ...session,
+          error
+        };
       }
     }
 });

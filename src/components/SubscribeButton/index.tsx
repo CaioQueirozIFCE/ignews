@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { getStripeJS } from '../../services/stripe-js';
 import { useModalLoader } from '../../hooks/useModalLoader';
 import {toastMessage} from '../Toast';
+import { useRouter } from 'next/router';
 
 interface ISUbscribeButton{
     priceId: string
@@ -14,10 +15,14 @@ const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
     const {data:session} = useSession();
     const [disabledButtonSubscribe, setDisabledButtonSubscribe] = useState<boolean>(false);
     const {disabledComponentModalLoading, enabledComponentModalLoading} = useModalLoader();
+    const router = useRouter();
     const handleSubscribe = async () => {
         if(!session){
             signIn('github')
             return;
+        }
+        if(session.activeSubscription){
+            return router.push('/posts');
         }
         try{
             setDisabledButtonSubscribe(true);

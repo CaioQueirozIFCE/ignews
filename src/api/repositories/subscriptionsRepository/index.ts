@@ -21,13 +21,18 @@ class SubscriptionsRespository{
     public async getUserActiveSubscription(email: string, indexMatch: string){
         const subscription_ref = await fauna.query(
             q.Get(
-                q.Match(q.Index('subscription_by_customer_ref'),
-                    q.Select(
-                        "ref",
-                        q.Get(
-                            this.match(email, indexMatch)
-                        )
-                    )
+                q.Intersection(
+                    [
+                        q.Match(q.Index('subscription_by_customer_ref'),
+                            q.Select(
+                                "ref",
+                                q.Get(
+                                    this.match(email, indexMatch)
+                                )
+                            )
+                        ),
+                        this.match("active", 'subscription_by_status')
+                    ]
                 )
             )
         ).then(resp => resp).catch(err => err);
