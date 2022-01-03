@@ -1,11 +1,12 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { RichText } from 'prismic-dom';
-import { getPrismicClient } from '../../services/prismic';
-import styles from './stylesPosts/post.module.scss';
+import { getPrismicClient } from '../../../services/prismic';
+import styles from '../stylesPosts/post.module.scss';
 
-type PostProps = {
+type PostPeviewProps = {
     slug: string;
     title: string;
     content: string;
@@ -14,10 +15,10 @@ type PostProps = {
 }
 
 type Props = {
-    post: PostProps
+    post: PostPeviewProps
 }
 
-const Post = ({ post }: Props) => {
+const PostPeview = ({ post }: Props) => {
 
     return(
         <>
@@ -28,35 +29,43 @@ const Post = ({ post }: Props) => {
                 <article className={`${styles.postArticle}`}>
                     <h1>{post.title}</h1>
                     <time className={post.firstChildIsParagraph ? styles.firstChildContentIsParagraph : ''}>{post.updatedAt}</time>
-                    <div className={styles.post} dangerouslySetInnerHTML={{__html: post.content}}/>
+                    <div className={`${styles.post} ${styles.previewContent}`} dangerouslySetInnerHTML={{__html: post.content}}/>
                 </article>
             </main>
+            <div className={`${styles.continueReading} ${styles.animationButton}`}>
+                        Wanna continue reading?
+                <Link href="/">
+                    <a>
+                        Subscribe now <img src="/images/emoji-3d.png" alt="emoji hug" />
+                    </a>
+                </Link>
+            </div>
         </>
     );
 }
 
-export default Post;
+export default PostPeview;
 
-export const getServerSideProps: GetServerSideProps = async ({req, params}) => {
+export const getStaticPaths : GetStaticPaths = () => {
+
+    return {
+        paths: [],
+        fallback: 'blocking'
+    }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params}) => {
 
     const {slug} = params;
-    const session = await getSession({req});
 
-    if(!session.activeSubscription){
-        return {
-            redirect:{
-                destination: '/',
-                permanent: false
-            }
-        };
-    }
     const prismic = getPrismicClient();
+
     const response = await prismic.getByUID('publication', String(slug), {});
 
     const post = {
         slug: response.uid,
         title: RichText.asText(response.data.title),
-        content: RichText.asHtml(response.data.content),
+        content: RichText.asHtml(response.data.content.slice(0, 3)),
         updatedAt: new Date(response.last_publication_date).toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'long',

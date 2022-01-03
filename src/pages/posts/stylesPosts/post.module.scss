@@ -93,8 +93,71 @@
                 filter: brightness(0.8);
             }
         }
+
+        &.previewContent{
+            background: linear-gradient(var(--gray-100), transparent);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     }
 
+}
+
+.continueReading{
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--gray-850);
+    border-radius:100px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 4rem auto 2rem;
+    max-width: 57.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+
+    &:hover{
+        background-color: var(--gray-700);
+    }
+
+    &::after{
+        content: "";
+        background-color: var(--gray-700);
+        position: absolute;
+        z-index: -1;
+        padding: 0.85em 0.75em;
+        display: block;
+    }
+    &:hover::after{
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        transition: all 0.4s;
+    }
+
+    a{
+        color: var(--yellow-500);
+        margin-left: 0.5rem;
+        display: flex;
+        align-items: center;
+
+        img{
+            width: 3rem;
+            margin-left: 0.3rem;
+        }
+    }
+}
+.animationButton::after {
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    right: 100%;
 }
 
 
