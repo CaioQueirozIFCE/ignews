@@ -13,9 +13,25 @@ class SubscriptionsRespository{
         return subscriptionRef;
     }
     
-    public match(subscriptionId: string, indexMatch: string): Expr {
-        const subscription =  q.Match(q.Index(indexMatch), q.Casefold(subscriptionId));
+    public match(value: string, indexMatch: string): Expr {
+        const subscription =  q.Match(q.Index(indexMatch), q.Casefold(value));
         return subscription;
+    }
+
+    public async getUserActiveSubscription(email: string, indexMatch: string){
+        const subscription_ref = await fauna.query(
+            q.Get(
+                q.Match(q.Index('subscription_by_customer_ref'),
+                    q.Select(
+                        "ref",
+                        q.Get(
+                            this.match(email, indexMatch)
+                        )
+                    )
+                )
+            )
+        ).then(resp => resp).catch(err => err);
+        return subscription_ref;
     }
 
     //create

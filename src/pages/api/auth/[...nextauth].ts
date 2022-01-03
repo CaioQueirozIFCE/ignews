@@ -3,6 +3,7 @@ import NextAuth from "next-auth"
 import {fauna} from '../../../services/fauna';
 import GithubProvider from 'next-auth/providers/github';
 import { CustomerRepository } from '../../../api/repositories/customerRepository';
+import { SubscriptionsRespository } from '../../../api/repositories/subscriptionsRepository';
 
 export default NextAuth({
   providers: [
@@ -36,8 +37,11 @@ export default NextAuth({
 
       },
       async session ({ session, token }) {
-        session.user = token
-        return session
+        const subscriptionRepository = new SubscriptionsRespository();
+        const customerRef = await subscriptionRepository.getUserActiveSubscription(session.user.email, 'user_by_email');
+        session.statusSubscription = customerRef?.data?.status;
+        session.user = token;
+        return session;
       }
     }
 });

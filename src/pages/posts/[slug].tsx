@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import { RichText } from 'prismic-dom';
 import { getPrismicClient } from '../../services/prismic';
@@ -36,14 +37,15 @@ const Post = ({ post }: Props) => {
 
 export default Post;
 
-export const getServerSideProps: GetServerSideProps = async ({req: request, params}) => {
+export const getServerSideProps: GetServerSideProps = async ({req, params}) => {
 
     const {slug} = params;
-    // console.log('req', request.cookies['next-auth.session-token'])
+    const session = await getSession({req});
+    console.log('session9',session)
 
     const prismic = getPrismicClient();
     const response = await prismic.getByUID('publication', String(slug), {});
-    console.log(response.data.content[0].type)
+
     const post = {
         slug: response.uid,
         title: RichText.asText(response.data.title),
