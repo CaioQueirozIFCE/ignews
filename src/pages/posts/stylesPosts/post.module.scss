@@ -98,6 +98,10 @@
             background: linear-gradient(var(--gray-100), transparent);
             background-clip: text;
             -webkit-text-fill-color: transparent;
+
+            pre{
+                background-color: transparent;
+            }
         }
     }
 
@@ -111,7 +115,7 @@
     font-size: 1.25rem;
     font-weight: bold;
     margin: 4rem auto 2rem;
-    max-width: 57.5rem;
+    max-width: 58rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -165,5 +169,28 @@
     .postArticle {
         height: 100%;
         max-width: 720px;
+    }
+    .continueReading {
+        width: 40rem;
+        bottom: 2rem;
+    }
+}
+
+@media(max-width: 768px) {
+    .continueReading {
+        position: fixed;
+        width: 37rem;
+        flex-direction: column;
+        height: 6rem;
+        padding-top: 3rem;
+        bottom: 4rem;
+
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+@media(max-width: 500px) {
+    .continueReading {
+        width: 27rem;
     }
 }
