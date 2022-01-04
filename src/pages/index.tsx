@@ -25,7 +25,7 @@ const Home = (products: HomeProps) => {
         </Head>
         <main className={styles.homeContainer}>
           <section className={styles.hero}>
-            <span>👏 Hey, welcome</span>
+            <div><img src="/images/clapping-hands.png"/> <span>Hey, welcome</span></div>
             <h1>News about the <span>React</span> world.</h1>
             <p>
               Get acess to all the publications <br/>
