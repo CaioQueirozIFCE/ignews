@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head"
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { SubscribeButton } from "../components/SubscribeButton";
 import { stripe } from "../services/stripe";
 import styles from './home.module.scss';
@@ -39,7 +39,7 @@ const Home = (products: HomeProps) => {
   );
 }
 
-export default Home;
+export default memo(Home);
 
 export const getStaticProps: GetStaticProps = async () => {
 

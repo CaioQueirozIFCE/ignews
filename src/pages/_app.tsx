@@ -1,5 +1,5 @@
 import {AppProps} from 'next/app';
-import { Header } from '../components/Header';
+import Header  from '../components/Header';
 import {SessionProvider} from 'next-auth/react';
 import { ControllModalLoadingProvider } from '../contexts/ModalLoader/contextModalLoader';
 import {ControlModalTabNavigationProvider} from '../contexts/TabNavigation/contextTabNavigation';

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './styles.module.scss';
-import { ActivedLink } from '../ActivedLink';
+import ActivedLink from '../ActivedLink';
 
 const Nav: React.FC = () => {
     console.log('nav')

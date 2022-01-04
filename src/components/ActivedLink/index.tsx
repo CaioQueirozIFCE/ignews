@@ -1,6 +1,6 @@
 import Link, { LinkProps } from 'next/link';
 import {useRouter} from 'next/router';
-import React, { useMemo, ReactElement } from 'react';
+import React, { useMemo, ReactElement, memo } from 'react';
 
 interface ActivedLinkProps extends LinkProps{
     activedClassName: string;
@@ -30,4 +30,4 @@ const ActivedLink = ({activedClassName, children, subPages, ...rest}: ActivedLin
     );
 }
 
-export { ActivedLink }
+export default memo(ActivedLink); 
