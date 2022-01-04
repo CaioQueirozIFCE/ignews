@@ -22,7 +22,7 @@ const ActivedLink = ({activedClassName, children, subPages, ...rest}: ActivedLin
         return asPath === rest.href ? activedClassName : '';
     }, [asPath, activedClassName, rest.href, subPages]);
     
-    console.log('activedLink -> className => ', className)
+    console.log('activedLink -> className => ', className, 'path =>', rest.href, 'asPath => ', asPath)
     return(
         <Link {...rest}>    
             {React.cloneElement(children, {className})}
