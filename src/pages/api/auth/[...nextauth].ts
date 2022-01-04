@@ -6,6 +6,7 @@ import { CustomerRepository } from '../../../api/repositories/customerRepository
 import { SubscriptionsRespository } from '../../../api/repositories/subscriptionsRepository';
 
 export default NextAuth({
+  secret: process.env.SECRET_KEY,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
