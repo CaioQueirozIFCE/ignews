@@ -11,16 +11,20 @@ interface ActivedLinkProps extends LinkProps{
 const ActivedLink = ({activedClassName, children, subPages, ...rest}: ActivedLinkProps) => {
     const {asPath} = useRouter();
     
-    const className = useMemo(() => {
-        if(subPages){
-            return asPath.match("" + rest.href.toString() + "(\/(.){0,})?") !== null ? activedClassName : '';
-        }
+    // const className = useMemo(() => {
+    let className;    
+    if(subPages){
+     className  = asPath.match("" + rest.href.toString() + "(\/(.){0,})?") !== null ? activedClassName : '';
+    }else{
+            className =  asPath === rest.href ? activedClassName : '';
+
+    }
 
         console.log('activedLink -> asPath => ', asPath)
         console.log('activedLink -> rest.href => ', rest.href)
         console.log('activedLink -> verificação => ', asPath === rest.href)
-        return asPath === rest.href ? activedClassName : '';
-    }, [asPath, activedClassName, rest.href, subPages]);
+
+    // }, [asPath, activedClassName, rest.href, subPages]);
     
     console.log('activedLink -> className => ', className, 'path =>', rest.href, 'asPath => ', asPath)
     return(
