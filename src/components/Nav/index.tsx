@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import { ActivedLink } from '../ActivedLink';
 
 const Nav: React.FC = () => {
-
+    console.log('nav')
     return(
         <nav className={styles.navContainer}>
             <ActivedLink  href="/" passHref activedClassName={styles.active} subPages={false}>

@@ -17,7 +17,7 @@ const Home = (products: HomeProps) => {
     monitorScreenHeight();
     window.scrollTo({top: 0 - 40, behavior: 'smooth'});
   }, []);
-
+  console.log('home')
   return (
       <>
         <Head>
