@@ -10,7 +10,7 @@ const SignInButton: React.FC = () => {
         const typeDevice = width > 700 ? 'desktop' : 'mobile';
         const buttonSize = {
             'desktop': <DesktopSignInButton/>,
-            'mobile': <MobileSignInButton/>
+            'mobile': <MobileSignInButton />
         }
         return buttonSize[typeDevice] ? buttonSize[typeDevice] : null;
     }, []);
