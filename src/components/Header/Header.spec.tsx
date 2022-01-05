@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import {getByTestId, getByText, render, screen} from '@testing-library/react';
 import Header from '.';
 
 jest.mock('next/router', () => {
@@ -55,8 +55,8 @@ describe('Header Component', () => {
         render(
             <Header/>
         );
-    
-        expect(screen.getByText('Caio Queiroz')).toBeInTheDocument();
+
+        expect(screen.getByTestId("TestHeaderElement")).toBeInTheDocument();
     });
 
     it('Should be render correctly Nav Component with base in Width', () => {
@@ -66,14 +66,5 @@ describe('Header Component', () => {
         );
     
         expect(screen.getByTestId(testeId)).toContainElement(screen.getByTestId(testeId));
-    });
-
-    it('Should be render correctly SignInButton Component with width > 921 px and logged', () => {
-        render(
-            <Header/>
-        );
-    
-        expect(screen.getByText('Caio Queiroz')).toBeInTheDocument();
-        expect(() => screen.getByText(/Sign in with Github/i)).toThrow();
     });
 });

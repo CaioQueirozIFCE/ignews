@@ -10,11 +10,11 @@ const MobileSignInButton : React.FC = () => {
     return session ? 
         (
             <button className={`${styles.signInButton} ${styles.borderButtonLogged}`} onClick={enabledComponentModalTabNavigation}>
-                <FaGithub color="#04d361"/>
+                <FaGithub color="#04d361" data-testid="svgGitHubLogged"/>
             </button>
             ) : (
             <button className={`${styles.signInButton} ${styles.borderButtonNotLogged}`} onClick={enabledComponentModalTabNavigation}>
-                <FaGithub color="#eba417"/>
+                <FaGithub color="#eba417" data-testid="svgGitHubUnLogged"/>
             </button>
         )
 }
