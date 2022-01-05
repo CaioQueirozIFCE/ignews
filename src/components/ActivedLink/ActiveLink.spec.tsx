@@ -5,19 +5,32 @@ jest.mock('next/router', () => {
     return {
         useRouter() {
             return {
-                asPath: '/'
+                asPath: '/posts/preview/algum-artigo'
             }
         }
     }
 })
 
-test('active Link renders correctly', () => {
-    const activedClassName="styles";
-    const { debug } = render(
-        <ActivedLink href="/" subPages={false} passHref activedClassName={activedClassName}>
-            <a>Home</a>
-        </ActivedLink>
-    );
+describe('Active Link Component', () => {
+    it('should renders correctly', () => {
+        const activedClassName="active";
+        const { getByText } = render(
+            <ActivedLink href="/posts" subPages={true} passHref activedClassName={activedClassName}>
+                <a>Posts</a>
+            </ActivedLink>
+        );
 
-    debug();
+        expect(getByText('Posts')).toBeInTheDocument()
+    });
+
+    it('should receiving active class if link is current', () => {
+        const activedClassName="active";
+        const { getByText } = render(
+            <ActivedLink href="/posts" subPages={true} passHref activedClassName={activedClassName}>
+                <a>Posts</a>
+            </ActivedLink>
+        );
+
+        expect(getByText('Posts')).toHaveClass('active');
+    });
 });
