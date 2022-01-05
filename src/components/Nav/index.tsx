@@ -2,10 +2,14 @@ import React from "react";
 import styles from './styles.module.scss';
 import ActivedLink from '../ActivedLink';
 
-const Nav: React.FC = () => {
+type NavProps = {
+    testId: string;
+}
+
+const Nav: React.FC<NavProps> = ({testId}) => {
 
     return(
-        <nav className={styles.navContainer}>
+        <nav className={styles.navContainer} data-testid={testId}>
             <ActivedLink  href="/" passHref activedClassName={styles.active} subPages={false}>
                 <a>
                     Home

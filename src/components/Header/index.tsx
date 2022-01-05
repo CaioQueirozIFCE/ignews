@@ -11,8 +11,8 @@ const Header: React.FC = () => {
         <header className={styles.headerContainer}>
             <div className={styles.headerContent}>
                 <img src="/images/logo.svg" alt="logo ignews"/>
-                {width > 921 && <Nav/>}
-                <SignInButton/>
+                {width > 921 && <Nav testId={"TestNavComponent"}/>}
+                <SignInButton />
             </div>
         </header>
     );  

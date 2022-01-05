@@ -3,7 +3,6 @@ import { useWindowResize } from "../../../hooks/useWindowResize";
 import {DesktopSignInButton} from './DesktopSignInButton';
 import { MobileSignInButton } from "./MobileSignInButton";
 
-
 const SignInButton: React.FC = () => {
     const {width} = useWindowResize() || {width: 1000};
 
