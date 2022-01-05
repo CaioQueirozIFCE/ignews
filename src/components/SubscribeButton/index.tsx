@@ -6,13 +6,14 @@ import { getStripeJS } from '../../services/stripe-js';
 import { useModalLoader } from '../../hooks/useModalLoader';
 import {toastMessage} from '../Toast';
 import { useRouter } from 'next/router';
+import Button from '../Button';
 
 interface ISUbscribeButton{
     priceId: string
 }
 
 const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
-    const {data:session} = useSession();
+    const {data:session} = useSession() || {data: null};
     const [disabledButtonSubscribe, setDisabledButtonSubscribe] = useState<boolean>(false);
     const {disabledComponentModalLoading, enabledComponentModalLoading} = useModalLoader();
     const router = useRouter();
@@ -39,14 +40,16 @@ const SubscribeButton: React.FC<ISUbscribeButton> = ({priceId}) => {
         }
     }
     return(
-        <button
+        <Button
             type="button"
             className={`${styles.subscribeButton} ${disabledButtonSubscribe ? styles.typeCursorNotAllowed : styles.typeCursorPointer}`}
             onClick={() => handleSubscribe()}
             disabled={disabledButtonSubscribe}
         >
-            Subscribe now
-        </button>
+            <>
+                Subscribe now
+            </>
+        </Button>
     );
 }
 
