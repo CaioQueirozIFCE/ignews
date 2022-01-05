@@ -11,18 +11,6 @@ jest.mock('next/router', () => {
     }
 });
 
-jest.mock('../../hooks/useWindowResize.ts', () => {
-    return{
-        useWindowResize(){
-            return {
-                width: 1000,
-                height: 1000,
-                isPortrait: true
-            }
-        }
-    }
-});
-
 describe('Footer Component', () => {
     it('Should be render correctly the Footer', () => {
         render(
