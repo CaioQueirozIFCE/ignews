@@ -4,8 +4,8 @@ import { Nav } from "../Nav";
 
 const Footer: React.FC = () => {
     return (
-        <div className={styles.footerContainer}>
-            <Nav/>
+        <div className={styles.footerContainer} data-testid="TestFooterComponent">
+            <Nav testId={"TestNavComponentFooter"}/>
         </div>
     );
 }

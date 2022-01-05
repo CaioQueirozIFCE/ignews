@@ -1,4 +1,4 @@
-import {getByTestId, getByText, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import Header from '.';
 
 jest.mock('next/router', () => {
@@ -60,7 +60,7 @@ describe('Header Component', () => {
     });
 
     it('Should be render correctly Nav Component with base in Width', () => {
-        const testeId = 'TestNavComponent'
+        const testeId = 'TestNavComponentHeader'
         render(
             <Header/>
         );

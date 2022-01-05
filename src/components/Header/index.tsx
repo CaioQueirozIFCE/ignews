@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         <header className={styles.headerContainer} data-testid="TestHeaderElement">
             <div className={styles.headerContent}>
                 <img src="/images/logo.svg" alt="logo ignews"/>
-                {width > 921 && <Nav testId={"TestNavComponent"}/>}
+                {width > 921 && <Nav testId={"TestNavComponentHeader"}/>}
                 <SignInButton />
             </div>
         </header>
