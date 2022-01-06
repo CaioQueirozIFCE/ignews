@@ -5,10 +5,12 @@ import { useSession } from 'next-auth/react';
 import {useModalTabNavigation} from '../../../../hooks/useModalTabNavigation';
 import Button from '.././../../Button';
 
-const MobileSignInButton : React.FC = () => {
-    const {data:session} = useSession() || {data: null};
+interface MobileSignInButtonProps{
+    enabledComponentModalTabNavigation(): void;
+}
 
-    const { enabledComponentModalTabNavigation } = useModalTabNavigation();
+const MobileSignInButton : React.FC<MobileSignInButtonProps> = ({enabledComponentModalTabNavigation}) => {
+    const {data:session} = useSession() || {data: null};
     
     return session ? 
         (

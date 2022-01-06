@@ -25,6 +25,7 @@ const ControlModalTabNavigationProvider: React.FC<IControlModalTabNavigationProp
     const disableModalTabNavigation = useCallback(() => modalTabNavigation ??  setModalTabNavigation(false), [modalTabNavigation]);
     
     const enabledComponentModalTabNavigation = useCallback(() => {
+        console.log('clicado')
         enableModalTabNavigation()
     }, [enableModalTabNavigation]);
     
