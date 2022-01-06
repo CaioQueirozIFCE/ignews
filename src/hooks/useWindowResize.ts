@@ -12,13 +12,13 @@ const useWindowResize = () : IUseWindowResizeProps => {
     useEffect(() => {
         function handleResize() {
             setWindowSize({
-                width: window.visualViewport.width,
-                height: window.visualViewport.height,
+                width: window.visualViewport?.width,
+                height: window.visualViewport?.height,
                 isPortrait:
                     window.screen &&
-                    window.screen.orientation &&
-                    window.screen.orientation.angle
-                        ? !window.screen.orientation.angle
+                    window.screen?.orientation &&
+                    window.screen?.orientation?.angle
+                        ? !window.screen?.orientation?.angle
                         : true,
             });
         }

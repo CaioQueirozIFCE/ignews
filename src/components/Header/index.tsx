@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useEffect} from 'react';
 import { Nav } from '../Nav';
 import { SignInButton } from './SignInButton';
 import styles from './styles.module.scss';

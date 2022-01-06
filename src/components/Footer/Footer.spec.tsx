@@ -1,15 +1,8 @@
 import {render, screen} from '@testing-library/react';
 import {Footer} from '.';
+import { useRouterMocked } from '../../tests/ImportantsMocks';
 
-jest.mock('next/router', () => {
-    return {
-        useRouter() {
-            return {
-                asPath: '/posts/preview/algum-artigo'
-            }
-        }
-    }
-});
+useRouterMocked.mockImplementation(() => ({ asPath: '/' }));
 
 describe('Footer Component', () => {
     it('Should be render correctly the Footer', () => {

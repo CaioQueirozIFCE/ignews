@@ -17,6 +17,7 @@ const MobileSignInButton : React.FC = () => {
                 onClick={enabledComponentModalTabNavigation}
                 role="button" 
                 type="button"
+                data-testid="TestRenderButtonSignInForMobile"
             >
                 <FaGithub color="#04d361" data-testid="svgGitHubLogged"/>
             </Button>

@@ -1,15 +1,8 @@
 import {render} from '@testing-library/react';
 import ActivedLink from '.';
+import { useRouterMocked } from '../../tests/ImportantsMocks';
 
-jest.mock('next/router', () => {
-    return {
-        useRouter() {
-            return {
-                asPath: '/posts/preview/algum-artigo'
-            }
-        }
-    }
-})
+useRouterMocked.mockImplementation(() => ({ asPath: '/posts/preview/algum-artigo' }));
 
 describe('Active Link Component', () => {
     it('should be renders correctly', () => {

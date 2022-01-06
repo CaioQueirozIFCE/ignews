@@ -16,6 +16,7 @@ const DesktopSignInButton : React.FC = () => {
                 role="button" 
                 name="button-logged" 
                 type="button"
+                data-testid="TestRenderButtonSignInForDesktop"
             >
                 <>
                     <FaGithub color="#04d361" />

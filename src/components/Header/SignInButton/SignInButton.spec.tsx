@@ -1,28 +1,21 @@
 import {render, screen} from '@testing-library/react';
 import {SignInButton} from '.';
+import { useWindowResizeMocked } from '../../../tests/ImportantsMocks';
 
 jest.mock('next-auth/react');
 
 describe('SignInButton Component', () => {
     it('Should be render correctly SignInButton Component with width > 921 px', () => {    
-        global.visualViewport = {
-            ...global.visualViewport,
-            width: 1000,
-        };
-
+        useWindowResizeMocked.mockImplementation(() => ({ width: 1000 }));
         render(
             <SignInButton/>
         );
         expect(screen.getByTestId('TestRenderButtonSignInForDesktop')).toBeInTheDocument();
-        expect(() => screen.getByText("TestRenderButtonSignInForMobile")).toThrow();
+        expect(() => screen.getByTestId("TestRenderButtonSignInForMobile")).toThrow();
     });
 
     it('Should be render correctly SignInButton Component with width < 921 px', () => {
-        global.visualViewport = {
-            ...global.visualViewport,
-            width: 500,
-        };
-
+        useWindowResizeMocked.mockImplementation(() => ({ width: 500 }));
         render(
             <SignInButton/>
         );

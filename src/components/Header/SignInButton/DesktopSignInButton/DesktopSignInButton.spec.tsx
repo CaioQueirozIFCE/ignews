@@ -1,16 +1,17 @@
-import {fireEvent, render, screen } from '@testing-library/react';
-import { useSession, signOut, signIn } from 'next-auth/react';
+import {fireEvent, render, screen, cleanup } from '@testing-library/react';
+import { signOut, signIn, SignOutResponse, SignInResponse } from 'next-auth/react';
 import {DesktopSignInButton} from '.';
-import {mocked} from 'ts-jest/utils';
+
+beforeEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+});
 
 jest.mock('next-auth/react');
 
 describe('DesktopSignInButton', () => {
     it('Should be render SignIn button for desktop with logged user', () => {
-        const useSessionMocked = mocked(useSession);
-        const signOutMocked = mocked(signOut);
-
-        useSessionMocked.mockReturnValueOnce({
+        jest.spyOn(require('next-auth/react'), 'useSession').mockReturnValueOnce({
             data:{
                 user:{
                     name: 'Caio Queiroz',
@@ -18,12 +19,11 @@ describe('DesktopSignInButton', () => {
                     image: 'imagem-qualquer',
                 },
                 expires: '1'
-            }, status: 'authenticated',});
+        }, status: 'authenticated',});
+        const signOutMocked = signOut as jest.Mock<Promise<undefined | SignOutResponse>>
 
-        render(
-            <DesktopSignInButton/>
-        );
-        
+        render(<DesktopSignInButton/>);
+
         expect(screen.queryByRole('button', {name: "Caio Queiroz"})).toBeInTheDocument();
         expect(screen.queryByRole('button', {name: "Sign in with Github"})).not.toBeInTheDocument();
 
@@ -32,14 +32,11 @@ describe('DesktopSignInButton', () => {
     });
 
     it('Should be render SignIn button for desktop with unlogged user', () => {
-        const useSessionMocked = mocked(useSession);
-        const signInMocked = mocked(signIn);
-        render(
-            <DesktopSignInButton/>
-        );
-        
-        useSessionMocked.mockReturnValueOnce({data: null, status: 'unauthenticated'});
-
+        jest.spyOn(require('next-auth/react'), 'useSession').mockReturnValueOnce({data: null, status: 'unauthenticated'});
+        const signInMocked = signIn as jest.Mock<Promise<undefined | SignInResponse>>;
+           
+        render(<DesktopSignInButton/>);
+            
         expect(screen.queryByRole('button', {name: "Caio Queiroz"})).not.toBeInTheDocument;
         expect(screen.queryByRole('button' ,{name: "Sign in with Github"})).toBeInTheDocument();
 
